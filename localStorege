@@ -75,7 +75,7 @@
     //del方法;
     document.onclick=function(e){
         var target = e.target;
-        if(target.className = 'del'){
+        if(target.className == 'del'){
             localStorage.removeItem(target.parentNode.id);
             target.parentNode.outerHTML ='';
         }
