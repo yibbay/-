@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" name="name" placeholder="name"><br>
+<input type="text" name="movie" placeholder="movie"><br>
+<input type="text" name="type" placeholder="type"><br>
+<input type="button" name="add" value="提交">
+<table>
+    <thead>
+    <tr>
+        <td><input type="checkbox"></td>
+        <td>姓名</td>
+        <td>电影</td>
+        <td>行业</td>
+        <td>操作</td>
+    </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+<script src="../fuyue/20160527/20160527/pubsub.js"></script>//重点！！！！！！！！！！！！！！！！
+<script>
+
+    var tr = '<tr id="{id}">' +//此处给id是为了方便删除localStorage
+            '<td><input type="checkbox"></td>' +
+            '<td>{name}</td>' +
+            '<td>{movie}</td>' +
+            '<td>{type}</td>' +
+            '<td class="del">del</td>' +//此del类名也是为了方便事件代理删除；
+            '</tr>';
+
+    document.querySelector('[type=button]').onclick = function () {
+        var randomId = (function () {
+            var randomArr = [];
+            for (var i = 0; i < 16; i++) {
+                randomArr.push((parseInt(Math.random() * 16)).toString(16));
+            }
+            return randomArr.join('');
+        })();
+//        console.log(randomId);
+        var obj = {};
+        obj.id = randomId;
+        obj.name = document.querySelector('[name=name]').value;
+        obj.type = document.querySelector('[name=type]').value;
+        obj.movie = document.querySelector('[name=movie]').value;
+        localStorage.setItem(randomId, JSON.stringify(obj));//新建本地数据;注意转成字符串;
+        PubSub.trigger('creatStorage',obj);//触发事件；
+    };
+
+    PubSub.on('creatStorage',function(data){//事件触发后执行；
+        updataTr(data);
+    });
+    function updataTr(data) {//data是一个对象
+        var html = tr.replace(/{(\w+)}/g, function (ex, attr) {
+            return data[attr];
+        });
+        var tbody = document.createElement('tbody');
+        tbody.innerHTML = html;
+        document.querySelector('tbody').appendChild(tbody.firstElementChild);
+    }
+    function localData() {//取本地数据
+        var le = localStorage.length;
+        var localStorageArr = [];
+        for (var i = 0; i < le; i++) {
+            var id = localStorage.key(i);
+            var value = localStorage.getItem(id);
+            localStorageArr.push(JSON.parse(value));//注意要转成对象;
+        }
+        for (var i = 0; i < localStorageArr.length; i++) {
+            //updataTr(localStorageArr[i])//将每一个本地数据更新成tr
+            PubSub.trigger('creatStorage',localStorageArr[i])
+        }
+    }
+    localData();
+    //del方法;
+    document.onclick=function(e){
+        var target = e.target;
+        if(target.className == 'del'){
+            PubSub.trigger('del',target);
+        }
+    };
+    PubSub.on('del',function(data){
+        localStorage.removeItem(data.parentNode.id);
+        data.parentNode.outerHTML ='';
+    })
+</script>
+</body>
+</html>
