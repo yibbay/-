@@ -1,0 +1,74 @@
+//连打三遍看你会不会,解决刀耕火种的办法，建立联系，设计模式的思想（建立联系）
+var PubSub = (function () {
+    var events = {};//此方法防止外界访问并修改；
+    return {
+        on: function (etype, efn) {
+            events[etype] || (events[etype] = []);
+            events[etype].push(efn);
+        },
+        off: function (etype) {
+            events[etype] = '';
+        },
+        trigger: function (etype, data) {
+            if (events[etype]) {
+                events[etype].forEach(function (efn) {
+                    efn(data);
+                });
+            }
+        }
+    }
+})();
+
+//var PubSub = (function(){
+//	var obj ={};
+//	return {
+//		on:function(ev,fn){
+//			obj[ev]||obj[ev]=[];
+//			obj[ev].push(fn);
+//		},
+//		off:function(ev){
+//			obj[ev]='';
+//		},
+//		trigger:function(ev,data){
+//			obj[ev].forEach(function(value,index,arr){
+//					value(data);
+//			})
+//		}
+//	};
+//})();
+
+//var PubSub = (function () {
+//    var obj = {};
+//    return {
+//        on: function (ev, fn) {
+//            obj[ev] || obj[ev] = [];
+//            obj[ev].push(fn)
+//        },
+//        off:function(ev){
+//            obj[ev]='';
+//        },
+//        trigger:function(ev,data){
+//            obj[ev].forEach(function(value,index,arr){
+//              value(data);
+//            })
+//        }
+//    }
+//})();
+
+//var PubSub = (function(){
+//    var obj ={};
+//    return {
+//        on:function(ev,fn){
+//            obj[ev]||obj[ev]=[];
+//            obj[ev].push(fn);
+//        },
+//        off:function(ev){
+//            obj[ev]='';
+//        },
+//        trigger:function(ev,data){
+//            obj[ev].forEach(function(value,index,arr){
+//                value[data]
+//            })
+//        }
+//    }
+//})();
