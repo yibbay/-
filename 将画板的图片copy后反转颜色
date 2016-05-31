@@ -1,0 +1,27 @@
+function draw(){
+var img = new Image();
+img.src="img.jpg";
+
+img.onload = function(){
+cnt.drawImage(img,0,0);//cnt为取得canvas的2d画板对象(cav.getContext('2d'));
+
+var imgdata=cnt.getImageData(0,0,400,400);
+
+var ocav = document.createElement('canvas');
+ocav.width =400;
+ocav.height=400;
+ocav.style.background='#ccc';
+var ocnt = ocav.getContext('2d');
+for(var i=0;i<imgdata.data.length;i+=4)//图片颜色反转
+imgdata.data[i]=255-imgdata.data[i];
+imgdata.data[i+1]=255-imgdata.data[i+1];
+  imgdata.data[i+2]=255-imgdata.data[i+2];
+
+}
+console.log(imgdata)
+ocnt.putImageData(imgdata,0,0);
+document.body.appendChild(ocav)
+
+}
+
+}
