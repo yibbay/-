@@ -1,0 +1,93 @@
+ES6 已经提交给 Ecma 大会审查了，也就是说，我们将迎来一大波 javascript 的最新标准，还有一些语法糖。ES6 中有很多值得我们关注的东西，
+下面是我发现的一些我们最常用的一些新特性，进行记录一下。
+1. for-of循环
+这个东西用来循环数组很爽，原因呢，是因为它弥补了目前 es5 中循环数组的一切缺陷。
+比如 for-in，它会遍历数组对象的附加属性，而不仅仅是遍历数组值。还有一点是，for-in 中的索引是 string 类型的,这一点尤其重要。
+1
+2
+3
+4
+5
+6
+var arrObj=['alexchen',1,{}];
+arrObj._name='attr-AlexChen';
+for(var i in arrObj){
+console.log(arrObj[i]) // 会把_name属性也遍历出来 
+console.log(typeof(i)) // 全部输出 string
+}
+当然我们还有 forEach() 函数，它也有问题，比如你不能在里面 break return 之类的：
+1
+2
+3
+4
+5
+6
+7
+var arrObj = ['alexchen','boy','great'];
+arrObj.forEach(function (v) {
+if (v == 'boy') {
+return 'can not return';
+}
+console.log(v) //会输出alexchen great
+})
+这样看起来要比 for-in 简便很多。但就像上面说的一样，它有也有不足的地方。那么我们来试试 for-of 吧：
+1
+2
+3
+var arrObj = ['alexchen',1,{}];
+arrObj._name = 'attr-alexchen';
+for (var i of arrObj) {
+console.log(i);//这里只会输出,alexchen,1,object{},不会输出attr-alexchen
+console.log(typeof(i))//这里会输出 string,number,object
+if (i == 1) {
+break;
+}
+console.log(i)//只会输出 alexchen，满足条件之后就不在继续循环，提高了效率并且可以自由控制跳出循环或继续循环
+}
+可以看到：
+当使用 for-of 的时候，循环的是数组内部的元素且不会出现 for-in 中将附加属性也遍历的情况，其次，循环变量的类型和其在数组中的类型保
+持一致，而不是全部是 string 的情况。
+就这两点就值得我们选择 for-of 而不是 forEach() 或 for-in 当然，现在还有些浏览器不支持。不过以上代码可以在最新版本的 FireFox 
+执行成功并得到预期结果。当然 for-of 并不是只在数组上使用，你可以用在任何类数组类型的对象上，比如 DOM NodeList， 字符串 等。
+2. 模版字符串
+这个东西也非常好玩，用在字符串拼接的地方。从名称上我们就知道是干啥的了。在前端开发过程中难免会遇到要动态拼接字符串的情况
+(动态dom生成，数据格式化)等：
+1
+2
+3
+(function sayHello(name, words) { 
+console.log(`hello: ${name},welcome es6,your words is: ${words}`); //
+})('alexchen','im admin')//运行之后将会输出：hello: alexchen,welcome es6,your words is: im admin
+注意，被当作模版的字符串使用 ` 号包裹的。其中 $(paramenter) 是占位符,而且支持对象，eg:$(obj.name) 这种形式
+。与普通字符串相比模版字符串可以写成多行而不需要用 + 连接：
+1
+2
+3
+hello:$(name),
+welcome es6,
+your words is $(words)
+值得注意的是，模版字符串不会转义特殊字符，因此需要自己处理其中的安全隐患。模版字符串并不能够代替模版框架
+，原因是模版字符串没有内置的循环语法和条件语句。因此，对于常规的普通的字符串拼接，我们可以使用它来完成，会让你的代码看起来更酷一点。
+PS(除此之外，我觉得它并没有什么卵用。ψ(╰_╯))
+这里有更详细的介绍来解决上面说道的没有内置循环和判断分支的问题:
+es6-模版字符串-mozilla
+3. 默认参数（Defaults parameters）
+这个有点意思，是这样的，我们都知道 js 函数是不需要给函数参数设置默认值的，比如如下代码会报错：
+1
+(function(a=0,b=0){return a+b;})(1,2)//不支持es6的浏览器下会报错的SyntaxError: Unexpected token =
+这也就意味着，我们的参数不能给默认值，如果需要给参数默认值就需要在函数内部判断其是否为 undefined 的方式来处理。然而在 ES6 中呢，
+我们可以给参数设置默认值，而不用在函数内部去判断后赋默认值，不但可以赋值默认值，还可以使用运算表达式，如下：
+1
+2
+3
+4
+5
+6
+(function testDefaultsParams(pars1 = "alexchen",
+pars2 = (pars1 == "alexchen") ? "admin" : "not admin") {
+console.log(`welcome ${pars1} ,u r ${pars2}!!`)//用到了上面说的模版字符串
+})();
+/**参数为空时输出，welcome alexchen ,u r admin!!,
+如果第一个参数不是alexchen则输出，welcome alexchen ,u r not admin!!**/
+这种方式在编写代码时非常的简便，和动态语言一样，比如 c# 中。这样既直观，又方便。所以用起来还是很不错的。还一个剩余参数
+（Rest parameters），笔者没发现有什么特别的用处，因此就不写啦，感兴趣的可以去看看
