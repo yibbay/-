@@ -1,0 +1,14 @@
+   var div = document.getElementById('ad');
+ setTimeout(function(){
+      var date = new Date();
+      var days = date.getDate();
+      var hours = date.getHours();
+      var mi = date.getMinutes();
+      var s =date.getSeconds();
+      div.innerHTML = '倒计时:'+(11-days)+'天'+(15-hours)+'时'+(8-mi)+'分'+(59-s)+'秒';// 主要看分钟数，分钟为9则写8；
+
+     var timer=setTimeout(arguments.callee,1000);
+      if(div.innerHTML=='倒计时:'+0+'天'+0+'时'+0+'分'+0+'秒'){
+          clearTimeout(timer);
+      }
+  },1000)
