@@ -8,7 +8,7 @@
       div.innerHTML = '倒计时:'+(11-days)+'天'+(15-hours)+'时'+(8-mi)+'分'+(59-s)+'秒';// 主要看分钟数，分钟为9则写8；
 
      var timer=setTimeout(arguments.callee,1000);
-      if(8-mi<0){//这个判断还是要想清楚
+      if(15-hours<0||8-mi<0){//这个判断还是要想清楚,这样或许更好，再加个天数也更好
        div.innerHTML='倒计时:'+0+'天'+0+'时'+0+'分'+0+'秒';
           clearTimeout(timer);
       }
