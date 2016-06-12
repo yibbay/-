@@ -1,0 +1,45 @@
+  var S = (function () {
+        function swiper(dom, callback) {
+            var startX, startY;
+            var endX, endY;
+            var status = '';
+            var absX, absY;
+            var angle,dis;
+            dom.addEventListener('touchstart', function (e) {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                status = '';
+            }, false);
+            
+            dom.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+            }, false);
+            
+            dom.addEventListener('touchend', function (e) {
+                endX = e.changedTouches[0].clientX;
+                endY = e.changedTouches[0].clientY;
+                absX = endX - startX;
+                absY = endY - startY;
+                angle = Math.atan2(-absY,absX)*180/Math.PI;//角度
+                dis = Math.sqrt(absY*absY+absX*absX);//滑动方向的距离，在而不是手指移动的距离 
+                console.log(angle);
+                if(dis > 50){
+                    if (angle > -45&& angle<=45 ) {
+                        status = 'right';
+                    } else if (angle > 45&& angle<=135) {
+                        status = 'top';
+                    }else if(angle > 135|| angle<=-135){
+                        status ='left'
+                    }else{
+                        status='bottom';
+                    }
+                }else{
+                    //tab()
+                }
+                callback(status);
+            }, false)
+        }
+        return {
+            swiper: swiper
+        }
+    })();
