@@ -44,7 +44,7 @@
                     Math.floor(Math.random() * 16).toString(16);
         }
 
-        function getMin(arr) {
+        function getMin(arr) {//Math.min.apply(null,arr)可以返回数组中最小的值
             var minId = arr.length - 1,
                     minPos = arr[minId];
 
