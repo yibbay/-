@@ -26,6 +26,20 @@
 
 <script>
     //本方法重点是将数据统一格式成JSON数据，方便调用，在其它方面请借鉴；
+    //.localStorage本身带有方法有
+　//　添加键值对：localStorage.setItem(key,value)
+　//　获取键值：localStorage.getItem(key)
+//　　删除键值对：localStorage.removeItem(key)。
+　　//清除所有键值对：localStorage.clear()。
+　//　获取localStorage的属性名称（键名称）：localStorage.key(index)。
+//还有一个和普通对象不一样的属性length:
+　　//获取localStorage中保存的键值对的数量：localStorage.length。
+　　//http://www.jb51.net/article/78013.htm
+//?
+
+for(var i=0;i<localStorage.length;i++){
+console.log(localStorage.key(i)+ " : " + localStorage.getItem(localStorage.key(i)));
+}
     var tr = '<tr id="{id}">' +//此处给id是为了方便删除localStorage
             '<td><input type="checkbox"></td>' +
             '<td>{name}</td>' +
