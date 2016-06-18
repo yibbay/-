@@ -1,6 +1,6 @@
 compass watch;
 
-@extnd .block;
+@extnd .block;  @import url(css.css); @import "css.css"; @import "http://a/css.css"; @import "path"  _path.scss
 
 占位选择符%;!globel;
 
@@ -11,4 +11,14 @@ number String List Map Bool Color Null
 p:befor{
 content:'hello Sass #{$var}'
 }
+compass create --bare 创建空白项目
+compass watch --force 强制更新并监听 
 
+@mixin box-show($shadow...){//用于兼容性
+  -moz-box-shadow:$shadow;
+  -webkit-box-shadow:$shadow;
+  box-shadow:$shadow;
+}
+.shadow{
+@include box-shadow(1px 4px 4px #eee,1px 3px 4px #ffff,.......)
+}
