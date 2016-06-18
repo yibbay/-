@@ -1,0 +1,52 @@
+<script>
+    // seajs 的简单配置
+    seajs.config({
+        base: "./src/",
+//        alias: {
+//            "jquery": "jquery/jquery/1.10.1/jquery.js"
+//        }
+    });
+
+    // 加载入口模块
+    seajs.use("App")
+</script>
+
+//App.js//入口
+/**
+ * Created by Administrator on 2016/6/17.
+ */
+define(function(require,exports,module){
+   //var _a = require('ModuleA') ;
+   // var _b=require('ModuleB');
+   // _a();
+   // _b.b();
+
+    var Layout = React.createClass({
+        render:function(){
+            return (
+                React.createElement('div',{name:'aaa',data:'bbb'},'this is react create div')
+            )
+        }
+    });
+
+    //ReactDOM.render(React.createElement(Layout,null ,null),document.body)
+});
+
+
+//ModuleA.js//模块A
+define(function(require,exports,module){
+   var componentLayout = function(){
+
+   };
+    module.exports=componentLayout
+});
+
+//ModuleB.js//模块B
+
+
+define(function(require,exports,module){
+    var componentHeader = function(){
+        console.log('header')
+    };
+    module.exports={b:componentHeader}
+});
