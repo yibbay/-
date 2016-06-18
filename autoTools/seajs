@@ -16,7 +16,7 @@
  * Created by Administrator on 2016/6/17.
  */
 define(function(require,exports,module){
-   //var _a = require('ModuleA') ;
+   //var _a = require('ModuleA') ; // 将模块引入
    // var _b=require('ModuleB');
    // _a();
    // _b.b();
@@ -38,7 +38,7 @@ define(function(require,exports,module){
    var componentLayout = function(){
 
    };
-    module.exports=componentLayout
+    module.exports=componentLayout  //将模块导出
 });
 
 //ModuleB.js//模块B
@@ -48,5 +48,5 @@ define(function(require,exports,module){
     var componentHeader = function(){
         console.log('header')
     };
-    module.exports={b:componentHeader}
+    module.exports={b:componentHeader} //将模块导出
 });
