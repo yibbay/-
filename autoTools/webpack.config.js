@@ -17,11 +17,11 @@ module.exports = {
 		loaders:[
 		{
 			test:/\.js$/,
-			loader:'jsx-loader'//指的是我们使用具体的加载器
+			loader:'jsx-loader'//指的是我们使用具体的加载器//也可以加载js文件
 		},
 //		{
 //			test:/\.css$/,
-//			loader:'style-loader'
+//			loader:'style-loader||css-loader'//目前都不怎么好用，不建议用来加载css文件
 //		}
 		]
 	}
