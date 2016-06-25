@@ -1,0 +1,30 @@
+选择排序 ：
+
+   for (var i = 0; i < arr.length-1; i++) {
+        for (var j = i + 1; j < arr.length; j++) {
+            if (arr[i] > arr[j]) {
+                var temb = arr[i];
+                   arr[i]=arr[j];
+                   arr[j]=temb;
+
+            }
+        }
+    }
+
+冒泡排序 ：
+
+function mySort(){
+  for (var i=0;i<this.length;i++){
+       for(var j=0;j<this.length-1;j++){
+          
+          if(this[j]>this[j+1]){
+          var temb = this[j];
+          this[j]=this[j+1];
+          this[j+1]=temb;
+          }
+
+        }
+
+  }
+return this;
+}
