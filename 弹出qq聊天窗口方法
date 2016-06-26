@@ -1,0 +1,13 @@
+<iframe style="display:none;" src="tencent://message/?uin=1278230143&amp;Site=&amp;menu=yes"></iframe>
+
+
+<iframe style="display:none;" class="qq_iframe" src=""></iframe>
+<script>
+$(function(){
+    qq_list = new Array('1278230143', '353207542');
+    //随机
+    qq_i = Math.floor(Math.random()*qq_list.length);
+    src = "tencent://message/?uin="+qq_list[qq_i]+"&Site=&menu=yes";
+    $('.qq_iframe').attr('src', "tencent://message/?uin="+src+"&Site=&menu=yes")
+})
+</script>
