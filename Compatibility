@@ -1,1 +1,17 @@
 
+function getStyle(obj,attr,value) {//获取当前样式，如果value则设置行间样式
+if(!value) {
+if(obj.currentStyle) {
+return obj.currentStyle(attr);
+}else{
+obj.getComputedStyle(attr,false) 
+}
+}else { 
+obj.style[attr]=value
+}
+}
+
+var ev = ev || window.event
+document.body ||  document.documentElement
+xxx.currentStyle ||  window.getComputedStyle(xxx, null)
+event.cancelBubble = true;    event.stopPropagation();
