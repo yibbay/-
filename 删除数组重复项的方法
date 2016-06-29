@@ -1,0 +1,12 @@
+	Array.prototype.distinct = function(){
+		var _arr = new Array();
+		var obj = {};
+		for(var i=0; i<this.length; i++){
+			var val = this[i];
+			if(!obj[val]){
+				obj[val]= 1;
+				_arr.push(val);
+			}
+		}
+		return _arr;
+	}
