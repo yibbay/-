@@ -15,3 +15,94 @@ var ev = ev || window.event
 document.body ||  document.documentElement
 xxx.currentStyle ||  window.getComputedStyle(xxx, null)
 event.cancelBubble = true;    event.stopPropagation();
+
+
+//添加事件：
+function addHandler(el,type,fn){
+    if(el.addEventListener){ //DOM2 Events
+        addHandler=function(el,type,fn){
+            el.addEventListener(type,fn,false);
+        }
+    }else{ //IE
+        addHandler=function(el,type,fn){
+            el.attachEvent("on" + type,fn);
+        }
+    }
+    addHandler(el,type,fn);
+}
+
+
+//在IE中得到的日期是"2016"，在Firefox中看到的日期是"116"，
+//主要是因为在 Firefox 里面 getYear 返回的是 "当前年份-1900" 的值。
+var year= new Date().getYear();
+year = (year<1900?(1900+year):year);
+document.write(year+);
+或者
+var year = new Date().getFullYear();
+document.write(year);
+
+//设置float样式
+function floats(){
+	if(document.all){
+　　document.getElementById("header").style.styleFloat = "left";（IE）
+}
+else{
+　　document.getElementById("header").style.float = "left";
+}
+}
+
+//访问和设置class属性
+//由于class是保留关键字在IE和FF下不支持
+
+var myObject = document.getElementById("header");
+myObject.setAttribute("class","classValue");
+myObject.setAttribute("className","classValue");
+//或者
+//因为FF也支持className所以可以这样设置
+var myObject = document.getElementById("header");
+myObject.className="classValue";//设置header的class为classValue
+
+//移除节点
+
+//removeNode方法的功能是删除一个节点，
+//语法为node.removeNode（false）或者node.removeNode（true），返回值是被删除的节点。
+//removeNode（false）表示仅仅删除指定节点，然后这个节点的原孩子节点提升为原双亲节点的孩子节点。（也就是删除自己这个节点不删除
+//孩子，孩子的地位上升为原来父级的孩子）
+//removeNode（true）表示删除指定节点及其所有下属节点。被删除的节点成为了孤立节点，不再具有有孩子节点和双亲节点。（删除自己的和子节点）
+
+//Firefox中节点没有removeNode方法，只能用removeChild方法代替，先回到父节点，在从父节点上移除要移除的节点。
+//node.parentNode.removeChild(node); 
+ // 为了在ie和firefox下都能正常使用，取上一层的父结点，然后remove。
+
+
+//位置
+	function getAbsPoint(e){
+    var x = e.offsetLeft, y = e.offsetTop;
+    while (e = e.offsetParent) {
+        x += e.offsetLeft;
+        y += e.offsetTop;
+    }
+    alert("x:" + x + "," + "y:" + y);
+}
+
+
+//ajax中的XMLHttpRequest问题
+
+var xmlhttp;
+if (window.XMLHttpRequest) {
+  xmlhttp = new XMLHttpRequest();
+} elseif (window.ActiveXObject) { // IE的获取方式
+  xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+}
+
+//窗口的大小
+var aa = document.body.clientWidth(IE) || document.documentElement.clientWidth
+
+
+
+
+
+
+
+
+
