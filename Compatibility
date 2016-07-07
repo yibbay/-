@@ -100,7 +100,19 @@ var aa = document.body.clientWidth(IE) || document.documentElement.clientWidth
 
 
 
+<!–[if lt IE 7]>
+<script src=”http://ie7-js.googlecode.com/svn/version/2.0(beta)/IE7.js” type=”text/javascript”></script>
+<![endif]–>
+使IE5,IE6,IE7兼容到IE8模式
 
+<!–[if lt IE 8]>
+<script src=”http://ie7-js.googlecode.com/svn/version/2.0(beta)/IE8.js” type=”text/javascript”></script>
+<![endif]–>
+使IE5,IE6,IE7,IE8兼容到IE9模式
+
+<!–[if lt IE 9]>
+<script src=”http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js”></script>
+<![endif]–>
 
 
 
