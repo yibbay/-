@@ -1,0 +1,130 @@
+不同的浏览器对CSS的解释都有一点出入，特别是padding, line-height这些要细微控制的地方，下面的hack基本可以解决这个问题： 
+• 在属性前加下划线(_)，那么此属性只会被IE6解释 
+• 在属性前加星号(*)，此属性只会被IE7解释 
+• 在属性值后面加"\9"，表示此属性只会被IE8解释 
+
+各浏览器CSS hack兼容表：
+IE6	IE7	IE8	Firefox	Chrome	Safari
+!important	 	Y	 	Y	 	 
+_	Y	 	 	 	 	 
+*	Y	Y	 	 	 	 
+*+	 	Y	 	 	 	 
+\9	Y	Y	Y	 	 	 
+\0	 	 	Y	 	 	 
+nth-of-type(1)	 	 	 	 	Y	Y
+复制代码代码如下:
+
+#test{ 
+color:red; /* 所有浏览器都支持 */ 
+color:red !important;/* Firefox、IE7支持 */ 
+_color:red; /* IE6支持 */ 
+*color:red; /* IE6、IE7支持 */ 
+*+color:red; /* IE7支持 */ 
+color:red\9; /* IE6、IE7、IE8支持 */ 
+color:red\0; /* IE8支持 */ 
+} 
+body:nth-of-type(1) p{color:red;} /* Chrome、Safari支持 */ 
+
+整体测试代码示例： 
+
+复制代码代码如下:
+
+.test{ 
+color:#000000; 
+color:#0000FF\0; 
+[color:#00FF00; 
+*color:#FFFF00; 
+_color:#FF0000; 
+} 
+
+
+复制代码代码如下:
+
+#menu { line-height: 23px; }/* firefox 浏览器实行这句定义 */ 
+#menu { line-height: 26px\9; }/*ie6,ie7,ie8 这句定义主要尖对IE8来hack*/ 
+#menu { *line-height: 23px; }/*ie6,ie7 这句定义主要尖对IE7来hack*/ 
+#menu { _line-height: 23px; }/*ie6 浏览器优先实行这句定义*/ 
+或者写成一句，注意顺序 
+#menu { line-height:23px; line-height: 26px\9; *line-height: 23px; _line-height:23px; } 
+或者 
+* html #menu { line-height: 23px; } /* IE6 浏览器实行这句定义 */ 
+*+html #menu { line-height: 23px; }/* IE7 浏览器实行这句定义*/ 
+
+其他说明： 
+1、如果你的页面对IE7兼容没有问题，又不想大量修改现有代码，同时又能在IE8中正常使用，微软声称，开发商仅需要在目前兼容IE7的网站上添加一行代码即可解决问题，此代码如下： 
+<meta http-equiv="x-ua-compatible" content="ie=7" /> 
+2、body:nth-of-type(1) 如果这样写，表示全局查找body，将会对应第一个<body>。 
+3、还有其他写法，比如： 
+*html #test{}或者 *+html #test{} 
+4、*+html 对IE7的hack 必须保证HTML顶部有如下声明： 
+http://www.w3.org/TR/html4/loose.dtd 
+5、顺序：Firefox、IE8、IE7、IE6依次排列。 
+小知识：什么是CSS hack？ 
+　　由于不同的浏览器，比如IE6、IE7、IE8、Firefox等，对CSS的解析认识不一样，因此会导致生成的页面效果不一样，得不到我们所需要的页面效果。 
+　　这个时候我们就需要针对不同的浏览器去写不同的CSS，让它能够同时兼容不同的浏览器，能在不同的浏览器中也能得到我们想要的页面效果。 
+　　这个针对不同的浏览器写不同的CSS code的过程，就叫CSS hack，也叫写CSS hack。
+下面是补充：
+
+复制代码代码如下:
+
+selector{ 
+property:value; /* 所有浏览器 */ 
+property:value\9; /* 所有IE浏览器 */ 
++property:value; /* IE7 */ 
+_property:value; /* IE6 */ 
+} 
+
+当然，注意顺序。根据CSS的优先性，上面的写法，分别针对Firefox、IE8、IE7和IE6显示值。让我们看看这个演示： 
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>演示: 区分 IE6 / IE7 /IE8 /Firefox</title>
+</head>
+<style type="text/css" media="screen">
+p.ie{
+height:60px;text-align:center;line-height:60px;border:1px dashed #bbb;background:#f7f7f7;
+color:blue;
+color:brown\9;
++color:red;
+_color:green;
+}
+</style>
+<body style="width:500px;margin:0 auto;">
+<p class="ie">
+<span style="display:block;display:none\9;">嘿嘿，小子竟然也用Firefox，蓝色文字。</span>
+<!--[if IE 8]>不错不错，挺先进的嘛，使用IE8呢！文字是褐色的。<![endif]-->
+<!--[if IE 7]>你，IE7，红色文字！<![endif]-->
+<!--[if IE 6]>孩子，虽然显示的是绿色文字，不过，IE6可不是好东西呢！<![endif]-->
+</p>
+</body>
+</html>
+
+
+运行代码 复制代码 另存代码 提示：您可以先修改部分代码再运行
+
+演示的CSS代码如下： 
+
+复制代码代码如下:
+
+p.ie{ 
+height:60px;text-align:center;line-height:60px;border:1px dashed #bbb;background:#f7f7f7;font:15; 
+color:blue; // 所有浏览器 
+color:brown\9; // 所有IE浏览器 
++color:red; // IE7 
+_color:green; // IE6 
+} 
+
+哈，事实就这么简单。你看到的是那一句话呢？如果你多个浏览器都测试了，就会看到，显示的文字和颜色是不同的。为什么？看看我的HTML中这个段落是这样写的： 
+
+复制代码代码如下:
+
+<p class="ie"> 
+<span style="display:block;display:none\9;">嘿嘿，小子竟然也用Firefox，蓝色文字。</span> 
+<!--[if IE 8]>不错不错，挺先进的嘛，使用IE8呢！文字是褐色的。<![endif]--> 
+<!--[if IE 7]>你，IE7，红色文字！<![endif]--> 
+<!--[if IE 6]>孩子，虽然显示的是绿色文字，不过，IE6可不是好东西呢！<![endif]--> 
+</p> 
