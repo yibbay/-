@@ -3,3 +3,13 @@
 2.top:50%;left:50%;transform:translate(50%,50%);父relative;子absolute;
 
 3.margin:auto;父flex，子flex；
+
+4.不固定宽高图片 居中；
+增加辅助元素
+<div>
+  <img />
+  <i></i>
+<div>
+
+img{vertical-align:middle}
+i{display:inline-block;vertical-align:middle;height:100%}
