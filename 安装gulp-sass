@@ -2,8 +2,10 @@
 
 接下来，打开 package.json 文件，检查 script 字段
 
-"scripts": {    "coverage": "node scripts/coverage.js",    "install": "node scripts/install.js",    "postinstall": "node scripts/build.js",    "pretest": "node_modules/.bin/jshint bin lib scripts test",    "test": "node_modules/.bin/mocha test"  },
-打开 install 字段对应的文件 scripts/install.js，可以看到 checkAndDownloadBinary() 在下载这个二进制文件，URL使用的是 process.sass.binaryUrl，我们可以直接在这里覆盖这个变量，把改地址修改为上面提到的那个能够下载的二进制文件地址。
+"scripts": {    "coverage": "node scripts/coverage.js",    "install": "node scripts/install.js",    "postinstall": 
+"node scripts/build.js",    "pretest": "node_modules/.bin/jshint bin lib scripts test",    "test": "node_modules/.bin/mocha test"  },
+打开 install 字段对应的文件 scripts/install.js，可以看到 checkAndDownloadBinary() 在下载这个二进制文件，URL使用
+的是 process.sass.binaryUrl，我们可以直接在这里覆盖这个变量，把改地址修改为上面提到的那个能够下载的二进制文件地址。
 
 download(process.sass.binaryUrl, process.sass.binaryPath, function(err) {    ....}
 或者，找出上面提到的 sass.binaryUrl() 方法，打开 ../lib/extensions.js 文件，大约108行左右，修改为如下样子即可
